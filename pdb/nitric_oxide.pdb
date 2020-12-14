@@ -1,0 +1,14 @@
+HEADER    PROTEIN                                 01-JAN-08   NONE
+TITLE     NULL                                                        
+COMPND    MOLECULE: 435                                               
+SOURCE    NULL                                                        
+KEYWDS    NULL                                                        
+EXPDTA    NULL                                                        
+AUTHOR    Marvin                                                      
+REVDAT   1   01-JAN-08         0                                  
+HETATM    1  O   UNK     0       1.165   0.000   0.000  0.00  0.00           O+0
+HETATM    2  N   UNK     0       0.000   0.000   0.000  0.00  0.00           N+0
+CONECT    1    2                                                            
+CONECT    2    1                                                            
+MASTER        0    0    0    0    0    0    0    0    2    0    2    0
+END

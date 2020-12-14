@@ -1,0 +1,8 @@
+ffmpy==0.2.2
+moviepy==1.0.1
+numpy==1.17.4
+scipy==1.3.2
+# Python multiprocessing using extended pickle serialization with
+# dill: https://github.com/uqfoundation/dill
+# and pathos: https://github.com/uqfoundation/pathos
+pathos==0.2.5
