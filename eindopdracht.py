@@ -28,9 +28,19 @@ def make_receptor(loc, size=5):
     z = loc[2]
 
     rec = list()
-    rec.append(Cylinder([x - size + size/2, y - size * 15, z], [x - size + size/2, y, z], size, rec_model))
-    rec.append(Cylinder([x + size + size/2, y - size * 15, z], [x + size + size/2, y, z], size, rec_model))
-    rec.append(Sphere([x, y-size * 6, z], size * 3, rec_model))
+    rec.append(Cylinder([x - size * 1.2, y - size * 15, z], [x - size * 1.2, y + size*2, z], size, rec_model))
+    rec.append(Cylinder([x + size * 1.2, y - size * 15, z], [x + size * 1.2, y + size*2, z], size, rec_model))
+    rec.append(Cylinder([x - size * 1.2, y + size * 1.2, z], [x - size * 5, y + size * 4, z], size, rec_model))
+    rec.append(Cylinder([x - size * 7.2, y + size * 4, z - size/2],
+                        [x - size * 3.2, y + size * 4, z - size/2],
+                        size / 1.321, rec_model))
+
+    rec.append(Cylinder([x + size * 1.2, y + size * 1.2, z], [x + size * 5, y + size * 4, z], size, rec_model))
+    rec.append(Cylinder([x + size * 7.2, y + size * 4, z - size/2],
+                        [x + size * 3.2, y + size * 4, z - size/2],
+                        size / 1.321, rec_model))
+
+    rec.append(Sphere([x, y - size * 6, z], size * 3, rec_model))
 
     return rec
 
