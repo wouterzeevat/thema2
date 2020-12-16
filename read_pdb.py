@@ -2,11 +2,11 @@
 
 
 """
-description of the program
+Extracts the various atom positions of the molecules in the 6sof.pd file 
 """
 
 
-__author__ = "my name"
+__author__ = "keimpe dijkstra"
 
 
 import sys
