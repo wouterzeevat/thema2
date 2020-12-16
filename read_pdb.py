@@ -1,15 +1,27 @@
-def read_line(file_name):
-    DBREF_COUNT = 0
-    DBREF_INF_LIST = []
-    result = {}
-    for line in file_name:
-        if line.startswith("DBREF"):
-            DBREF_COUNT += 1
-            if "INS_HUMAN" in line:
-                DBREF_INF_LIST.append(line[12:14].strip())
-        if line.startswith("ATOM") and line[21:32].strip() in DBREF_INF_LIST:
+#!/usr/bin/env python3
 
 
-            result[line[21:32].strip()] =
+"""
+description of the program
+"""
+
+
+__author__ = "my name"
+
+
+import sys
+
+
+
+
+
+
+def main(args):
+    return 0
+
+
+if __name__ == "__main__":
+    exitcode = main(sys.argv)
+    sys.exit(exitcode)
 
 
