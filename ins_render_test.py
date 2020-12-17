@@ -39,11 +39,11 @@ def frame(step):
     
 
     camera = Camera('location', [0, 0, -100], 'look_at', [0, 0, 0])
-    light = LightSource([25, 5, 10], 'color', [1, 1, 1])
+    light = LightSource([0, 0, -100], 'color', [1, 1, 1])
     
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
     insulin = INSULIN_RECEPTOR.divide(atom_pos["G"], 'insulin')
-    
+    insulin.move_offset([0,0,0])
     
     
     return Scene(camera,
