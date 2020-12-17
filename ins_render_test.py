@@ -40,7 +40,7 @@ def frame(step):
     camera = Camera('location', [0, 0, -100], 'look_at', [0, 0, 0])
     light = LightSource([25, 5, 10], 'color', [1, 1, 1])
     
-    INSULIN_RECEPTOR = pdb.PDBMolecule('pdb/6sof.pdb', center=False, offset=[-10, 8, -5])
+    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
     insulin = INSULIN_RECEPTOR.divide(ins_id["G"], 'insulin')
     
     
