@@ -57,7 +57,7 @@ def main(args):
     #logger.info(" Total time: %d (frames: %d)", SETTINGS.Duration, eval(SETTINGS.NumberFrames))
     
     
-    pypovray.render_scene_to_png(frame, 0)
+    pypovray.render_scene_to_png(frame)
 
     return 0
 
