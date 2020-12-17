@@ -11,9 +11,13 @@ __author__ = "keimpe dijkstra"
 
 import sys
 
-def get_ins(file_name):
+PATH = "..\\thema2\\pdb\\6sof.pdb"
+
+
+def get_ins(PATH):
     ins_id = []
     atom_pos = {}
+    file_name = open(PATH)
     for line in file_name:
         if line.startswith("DBREF") and line[42:53].strip() == "INS_HUMAN":
             if line[12:15].strip() not in ins_id:
@@ -23,13 +27,14 @@ def get_ins(file_name):
                 atom_pos[line[21:23].strip()].append(line[6:12].strip())
             else:
                 atom_pos[line[21:23].strip()] = [line[6:12].strip()]
+    file_name.close()
     return ins_id, atom_pos
 
         
 def main(args):
-    path = "..\\thema2\\pdb\\6sof.pdb"
-    file_name = open(path)
-    ins_id, atom_pos = get_ins(file_name)
+    ins_id, atom_pos = get_ins(PATH)
+    print(ins_id)
+    print(atom_pos["G"])
     return 0
 
 
