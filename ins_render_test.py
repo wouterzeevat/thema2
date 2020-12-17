@@ -36,6 +36,7 @@ def frame(step):
     nframes = eval(SETTINGS.NumberFrames)
 
     ins_id, atom_pos = get_ins(PATH_LINUX)
+    print(ins_id["G"])
 
     camera = Camera('location', [0, 0, -100], 'look_at', [0, 0, 0])
     light = LightSource([25, 5, 10], 'color', [1, 1, 1])
