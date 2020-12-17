@@ -33,7 +33,7 @@ def frame(step):
     #logger.info(" @Time: %.3fs, Step: %d", curr_time, step)
 
     # Getting the total number of frames, see the configuration file
-    nframes = eval(SETTINGS.NumberFrames)
+    #nframes = eval(SETTINGS.NumberFrames)
 
     ins_id, atom_pos = get_ins(PATH_LINUX)
     
@@ -47,7 +47,7 @@ def frame(step):
     
     
     return Scene(camera,
-                 objects=[insulin, light])
+                 objects=[light] + insulin)
 
     
 def main(args):
@@ -57,10 +57,11 @@ def main(args):
     #logger.info(" Total time: %d (frames: %d)", SETTINGS.Duration, eval(SETTINGS.NumberFrames))
     
     
-    pypovray.render_scene_to_png(frame)
+    
 
     return 0
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv))
+    #sys.exit(main(sys.argv))
+    pypovray.render_scene_to_png(frame)
