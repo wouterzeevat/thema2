@@ -20,6 +20,7 @@ import argparse
 from read_pdb import get_ins
 
 PATH = "..\\thema2\\pdb\\6sof.pdb"
+PATH_LINUX = "/homes/kdijkstra/thema2/pdb/6sof.pdb"
 
 
 
@@ -34,7 +35,7 @@ def frame(step):
     # Getting the total number of frames, see the configuration file
     nframes = eval(SETTINGS.NumberFrames)
 
-    ins_id, atom_pos = get_ins(PATH)
+    ins_id, atom_pos = get_ins(PATH_LINUX)
 
     camera = Camera('location', [0, 0, -100], 'look_at', [0, 0, 0])
     light = LightSource([25, 5, 10], 'color', [1, 1, 1])
