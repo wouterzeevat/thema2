@@ -24,9 +24,9 @@ def get_ins(PATH):
                 ins_id += line[12:15].strip()
         elif line.startswith("ATOM") and line[21:23].strip() in ins_id:
             if line[21:23].strip() in atom_pos:
-                atom_pos[line[21:23].strip()].append(line[6:12].strip())
+                atom_pos[line[21:23].strip()].append(int(line[6:12].strip()))
             else:
-                atom_pos[line[21:23].strip()] = [line[6:12].strip()]
+                atom_pos[line[21:23].strip()] = [int(line[6:12].strip())]
     file_name.close()
     return ins_id, atom_pos
 
