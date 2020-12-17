@@ -13,7 +13,7 @@ __status__ = "Test"
 __version__ = "2020.0"
 
 import sys
-from pypovray import pypovray, SETTINGS, models, logger
+from pypovray import pypovray, SETTINGS, models, logger, pdb
 from vapory import Sphere, Scene, LightSource, Camera
 import math
 import argparse
