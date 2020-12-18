@@ -42,7 +42,7 @@ def frame(step):
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
     
 
-    insulin_pos = atom_pos["E"] + atom_pos["G"] + atom_pos["I"] + atom_pos["K"]
+    insulin_pos = atom_pos["N"] + atom_pos["O"] 
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
     insulin = INSULIN_RECEPTOR.divide(insulin_pos, 'insulin')
     insulin.move_to([0,0,0])
