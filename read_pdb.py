@@ -11,7 +11,7 @@ __author__ = "keimpe dijkstra"
 
 import sys
 
-PATH = "..\\thema2\\pdb\\6sof.pdb"
+PATH = "..\\thema2\\pdb\\6ce7.pdb"
 
 
 def get_ins(PATH):
@@ -34,7 +34,7 @@ def get_ins(PATH):
 def main(args):
     ins_id, atom_pos = get_ins(PATH)
     print(ins_id)
-    print(atom_pos["G"])
+    print(atom_pos["N"])
     return 0
 
 

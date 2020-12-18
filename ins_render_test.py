@@ -19,8 +19,8 @@ import math
 import argparse
 from read_pdb import get_ins
 
-PATH = "..\\thema2\\pdb\\6sof.pdb"
-PATH_LINUX = "/homes/kdijkstra/thema2/pdb/6sof.pdb"
+PATH = "..\\thema2\\pdb\\6ce7.pdb"
+PATH_LINUX = "/homes/kdijkstra/thema2/pdb/6ce7.pdb"
 
 
 
