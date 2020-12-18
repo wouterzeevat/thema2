@@ -19,7 +19,7 @@ def get_ins(PATH):
     atom_pos = {}
     file_name = open(PATH)
     for line in file_name:
-        if line.startswith("DBREF") and line[42:53].strip() == "INS_HUMAN":
+        if line.startswith("DBREF"):
             if line[12:15].strip() not in ins_id:
                 ins_id += line[12:15].strip()
         elif line.startswith("ATOM") and line[21:23].strip() in ins_id:
