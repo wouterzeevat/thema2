@@ -14,7 +14,7 @@ __version__ = "2020.1"
 import sys
 import pydoc
 from pypovray import pypovray, SETTINGS, models, pdb, logger
-from vapory import Scene, Camera, LightSource, Finish, Pigment, Texture, Sphere, Cylinder
+from vapory import Scene, Camera, LightSource, Finish, Pigment, Texture, Sphere, Cylinder, Text, LightSource
 
 
 def make_receptor(loc, size=5):
@@ -97,6 +97,27 @@ def make_membrane(loc, amount, size=5):
     return objects
 
 
+def make_tyrine(loc, size):
+    """
+    Creates the tyrine molecules
+    """
+    text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
+    cyl_model = Texture(Pigment('color', [0, 1, 0.5], ), Finish('reflection', 0))
+
+    tyr = []
+    y_always = [13, 13, 10, 10]
+    x_end = [-5, 5, -5, 5]
+    x = loc[0]
+    y = loc[1]
+    z = loc[2]
+    for _ in range(4):
+        tyr.append(Cylinder([x, y-size * y_always[_], z], [x-size*x_end[_], y-size*y_always[_], z], size, cyl_model))
+        tyr.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('Tyr')), 0,
+                        [x_end[_], y_always[_], z],
+                        text_model, 'scale', 10))
+    return tyr
+
+
 def zoom_in(frame):
     """
     Animating the zooming in part
@@ -143,13 +164,17 @@ def frame(step):
     """ Returns the scene at step number (1 step per frame) """
 
     camera = Camera('location', [0, 7, -200], 'look_at', [0, 0, 0])
+    lights = [LightSource([0, -10, -60], 0.5),
+              LightSource([0, -50, -60], 0.5),
+              ]
 
     receptor = make_receptor([0, 0, -2], 5)
     membrane = make_membrane([0, 0, 0], 10, 5)
+    tyrine = make_tyrine([0, 0, -2], 5)
 
     # Return the Scene object containing all objects for rendering
     return Scene(camera,
-                 objects=[models.default_light] + membrane + receptor)
+                 objects=[models.default_light] + tyrine)#+ membrane + receptor + tyrine + lights)
 
 
 def main(args):
