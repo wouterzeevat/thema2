@@ -46,7 +46,7 @@ def frame(step):
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
     INSULIN_RECEPTOR.move_to([0,0,0])
     insulin = INSULIN_RECEPTOR.divide(insulin_pos, 'insulin')
-    insulin.move_to([-100,0,0])
+    #insulin.move_to([-100,0,0])
     
     
     return Scene(camera,
