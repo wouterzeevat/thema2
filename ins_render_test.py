@@ -50,7 +50,7 @@ def frame(step):
     
     
     return Scene(camera,
-                 objects=[light] + insulin.povray_molecule + INSULIN_RECEPTOR)
+                 objects=[light] + insulin.povray_molecule + INSULIN_RECEPTOR.povray_molecule)
 
     
 def main(args):
