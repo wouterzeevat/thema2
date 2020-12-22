@@ -34,7 +34,7 @@ def get_ins(PATH):
 def main(args):
     ins_id, atom_pos = get_ins(PATH)
     print(ins_id)
-    print(atom_pos["N"])
+    print(atom_pos["N"], atom_pos["O"])
     return 0
 
 
