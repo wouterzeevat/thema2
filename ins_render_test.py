@@ -48,7 +48,7 @@ def frame(step):
     insulin = INSULIN_RECEPTOR.divide(insulin_pos, 'insulin')
     #insulin.move_to([-100,0,0])
     x = (30 * 0.1) - (0.1 * step)
-    y = 30 - step
+    y = (30*2) - (2*step)
     insulin.move_offset([x, y, 0])
     
     return Scene(camera,
