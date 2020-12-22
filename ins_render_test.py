@@ -29,11 +29,11 @@ PATH_LINUX = "/homes/kdijkstra/thema2/pdb/6ce7.pdb"
 def frame(step):
     """ Returns the scene at step number (1 step per frame) """
     # Show some information about how far we are with rendering
-    #curr_time = step / eval(SETTINGS.NumberFrames) * eval(SETTINGS.FrameTime)
-    #logger.info(" @Time: %.3fs, Step: %d", curr_time, step)
+    curr_time = step / eval(SETTINGS.NumberFrames) * eval(SETTINGS.FrameTime)
+    logger.info(" @Time: %.3fs, Step: %d", curr_time, step)
 
     # Getting the total number of frames, see the configuration file
-    #nframes = eval(SETTINGS.NumberFrames)
+    nframes = eval(SETTINGS.NumberFrames)
 
     ins_id, atom_pos = get_ins(PATH_LINUX)
     
@@ -47,7 +47,9 @@ def frame(step):
     INSULIN_RECEPTOR.move_to([0,0,0])
     insulin = INSULIN_RECEPTOR.divide(insulin_pos, 'insulin')
     #insulin.move_to([-100,0,0])
-    
+    x = (30 * 0.1) - (0.1 * step)
+    y = 30 - step
+    insulin.move_offset([x, y, 0])
     
     return Scene(camera,
                  objects=[light] + insulin.povray_molecule + INSULIN_RECEPTOR.povray_molecule)
@@ -57,7 +59,7 @@ def main(args):
     """ Main function performing the rendering """
     
     
-    #logger.info(" Total time: %d (frames: %d)", SETTINGS.Duration, eval(SETTINGS.NumberFrames))
+    logger.info(" Total time: %d (frames: %d)", SETTINGS.Duration, eval(SETTINGS.NumberFrames))
     
     
     
@@ -67,4 +69,5 @@ def main(args):
 
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
-    pypovray.render_scene_to_png(frame)
+    #pypovray.render_scene_to_png(frame)
+    pypovray.render_scene_to_mp4(frame, range(0,30))
