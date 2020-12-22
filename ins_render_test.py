@@ -49,7 +49,7 @@ def frame(step):
     insulin_pos.remove(10000)
     insulin_pos.remove(10001)
     insulin_pos.remove(10002)
-    insulin_pos.remove(10003)
+    
 
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
     INSULIN_RECEPTOR.move_to([0,0,0])
