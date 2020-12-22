@@ -43,6 +43,7 @@ def frame(step):
     
 
     insulin_pos = atom_pos["N"] + atom_pos["O"] 
+    #these need to be removed because the used insulin (b chain) is from a sheep, for humans the last aa must be removed
     insulin_pos.remove(9997)
     insulin_pos.remove(9998)
     insulin_pos.remove(9999)
