@@ -64,28 +64,28 @@ def frame(step):
         camera = Camera('location', [0, 0, -200], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
 
-        ins_id, atom_pos = get_ins(PATH_LINUX)
-        alphact_stage_one = atom_pos["P"]
-        alphact_stage_one_sliced = []
-        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
-        for pos in alphact_stage_one:
-            if pos in range(10014, 10211):
-                alphact_stage_one_sliced.append(pos)
-        alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-        alphact_stage_one_sliced_mol.move_to([-50,0,0])
+        #ins_id, atom_pos = get_ins(PATH_LINUX)
+        #alphact_stage_one = atom_pos["P"]
+        #alphact_stage_one_sliced = []
+        #INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
+        #for pos in alphact_stage_one:
+        #    if pos in range(10014, 10211):
+        #        alphact_stage_one_sliced.append(pos)
+        #alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+        #alphact_stage_one_sliced_mol.move_to([-50,0,0])
         
         ins_id, atom_pos = get_ins("/homes/kdijkstra/thema2/pdb/4oga.pdb")
         alphact_stage_two = atom_pos["F"]
         site_one_complex = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/4oga.pdb", center=False, offset=[-10, 8, -5])
-        #alphact_stage_two_mol = site_one_complex.divide(alphact_stage_two, "alphact_two")
-        #alphact_stage_two_mol.move_to([50,0,0])
+        alphact_stage_two_mol = site_one_complex.divide(alphact_stage_two, "alphact_two")
+        alphact_stage_two_mol.move_to([50,0,0])
 
         
 
 
     
     return Scene(camera,
-                 objects=[light]  + alphact_stage_one_sliced_mol.povray_molecule + site_one_complex.povray_molecule)
+                 objects=[light] + alphact_stage_two_mol.povray_molecule )
 
     
 def main(args):
@@ -109,3 +109,4 @@ if __name__ == '__main__':
 # + insulin.povray_molecule
 # + alphact_stage_two_mol.povray_molecule
 # + alphact_stage_one_sliced_mol.povray_molecule
+# + site_one_complex.povray_molecule
