@@ -85,7 +85,7 @@ def frame(step):
 
     
     return Scene(camera,
-                 objects=[light] + insulin.povray_molecule + INSULIN_RECEPTOR.povray_molecule + alphact_stage_one_sliced_mol.povray_molecule + alphact_stage_two_mol.povray_molecule)
+                 objects=[light] + insulin.povray_molecule + INSULIN_RECEPTOR.povray_molecule  + alphact_stage_two_mol.povray_molecule)
 
     
 def main(args):
