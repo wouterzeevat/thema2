@@ -72,7 +72,7 @@ def frame(step):
             if pos in range(10014, 10211):
                 alphact_stage_one_sliced.append(pos)
         alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-        #alphact_stage_one_sliced_mol.move_to([-50,0,0])
+        git alphact_stage_one_sliced_mol.move_to([-50,0,0])
         
         #ins_id, atom_pos = get_ins("/homes/kdijkstra/thema2/pdb/4oga.pdb")
         #alphact_stage_two = atom_pos["F"]
