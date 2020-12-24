@@ -76,16 +76,17 @@ def frame(step):
                 alphact_stage_one_sliced.append(pos)
             if pos in range(10115, 10211):
                 alphact_stage_two_sliced.append(pos)
+        
         if step == 31:
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
             alphact_stage_one_sliced_mol.move_to([-50,0,0])
         if step == 32:
-            alphact_stage_two_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
-            alphact_stage_two_sliced_mol.move_to([50,0,0])
+            alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
+            alphact_stage_one_sliced_mol.move_to([50,0,0])
         
     
     return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + alphact_stage_two_sliced_mol.povray_molecule )
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )
 
     
 def main(args):
