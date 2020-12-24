@@ -103,4 +103,4 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_mp4(frame, 31)
+    pypovray.render_scene_to_png(frame, 31)
