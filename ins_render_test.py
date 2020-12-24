@@ -71,6 +71,8 @@ def frame(step):
 
         INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
         
+
+
         for pos in alphact:
             if pos in range(10014, 10211):
                 alphact_stage_one_sliced.append(pos)
@@ -79,10 +81,18 @@ def frame(step):
         
         if step == 31:
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-            alphact_stage_one_sliced_mol.move_to([-50,0,0])
+            alphact_stage_one_sliced_mol.move_to([0,0,0])
         if step == 32:
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
-            alphact_stage_one_sliced_mol.move_to([50,0,0])
+            alphact_stage_one_sliced_mol.move_to([0,0,0])
+        if step == 31:
+            alphact_stage_one_sliced += atom_pos["N"]
+            alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+            alphact_stage_one_sliced_mol.move_to([0,0,0])
+        if step == 32:
+            alphact_stage_two_sliced += atom_pos["N"]
+            alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
+            alphact_stage_one_sliced_mol.move_to([0,0,0])
         
     
     return Scene(camera,
