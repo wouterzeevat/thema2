@@ -85,11 +85,11 @@ def frame(step):
         if step == 32:
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
-        if step == 31:
+        if step == 33:
             alphact_stage_one_sliced += atom_pos["N"]
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
             alphact_stage_one_sliced_mol.move_to([0,0,0])
-        if step == 32:
+        if step == 34:
             alphact_stage_two_sliced += atom_pos["N"]
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
@@ -114,7 +114,7 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_mp4(frame, range(31, 33))
+    pypovray.render_scene_to_mp4(frame, range(31, 35))
 
 # + INSULIN_RECEPTOR.povray_molecule
 # + insulin.povray_molecule
