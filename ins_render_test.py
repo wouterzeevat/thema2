@@ -67,11 +67,11 @@ def frame(step):
         ins_id, atom_pos = get_ins(PATH_LINUX)
         alphact_stage_one = atom_pos["P"]
         alphact_stage_one_sliced = []
-        INSULIN_RECEPTOR_noshow = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
+        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
         for pos in alphact_stage_one:
             if pos in range(10014, 10211):
                 alphact_stage_one_sliced.append(pos)
-        alphact_stage_one_sliced_mol = INSULIN_RECEPTOR_noshow.divide(alphact_stage_one_sliced, 'alphact_one')
+        alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
         #alphact_stage_one_sliced_mol.move_to([-50,0,0])
         
         #ins_id, atom_pos = get_ins("/homes/kdijkstra/thema2/pdb/4oga.pdb")
@@ -85,7 +85,7 @@ def frame(step):
 
     
     return Scene(camera,
-                 objects=[light] + insulin.povray_molecule + INSULIN_RECEPTOR.povray_molecule + alphact_stage_one_sliced_mol.povray_molecule + alphact_stage_two_mol.povray_molecule)
+                 objects=[light]  + alphact_stage_one_sliced_mol.povray_molecule )
 
     
 def main(args):
@@ -104,3 +104,7 @@ if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
     pypovray.render_scene_to_png(frame, 31)
+
+# + INSULIN_RECEPTOR.povray_molecule
+# + insulin.povray_molecule
+# + alphact_stage_two_mol.povray_molecule
