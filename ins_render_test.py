@@ -35,30 +35,31 @@ def frame(step):
     # Getting the total number of frames, see the configuration file
     nframes = eval(SETTINGS.NumberFrames)
 
-    ins_id, atom_pos = get_ins(PATH_LINUX)
+    if step < 31:
+        ins_id, atom_pos = get_ins(PATH_LINUX)
     
 
-    camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
-    light = LightSource([0, 0, -100], 'color', [1, 1, 1])
+        camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
+        light = LightSource([0, 0, -100], 'color', [1, 1, 1])
     
 
-    insulin_pos = atom_pos["N"] + atom_pos["O"] 
-    #these need to be removed because the used insulin (b chain) is from a sheep, for humans the last aa must be removed
-    insulin_pos.remove(9997)
-    insulin_pos.remove(9998)
-    insulin_pos.remove(9999)
-    insulin_pos.remove(10000)
-    insulin_pos.remove(10001)
-    insulin_pos.remove(10002)
+        insulin_pos = atom_pos["N"] + atom_pos["O"] 
+        #these need to be removed because the used insulin (b chain) is from a sheep, for humans the last aa must be removed
+        insulin_pos.remove(9997)
+        insulin_pos.remove(9998)
+        insulin_pos.remove(9999)
+        insulin_pos.remove(10000)
+        insulin_pos.remove(10001)
+        insulin_pos.remove(10002)
     
 
-    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
-    INSULIN_RECEPTOR.move_to([0,0,0])
-    insulin = INSULIN_RECEPTOR.divide(insulin_pos, 'insulin')
-    #insulin.move_to([-100,0,0])
-    x = (30 * 0.1) - (0.1 * step)
-    y = (30*2) - (2*step)
-    insulin.move_offset([x, y, 0])
+        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
+        INSULIN_RECEPTOR.move_to([0,0,0])
+        insulin = INSULIN_RECEPTOR.divide(insulin_pos, 'insulin')
+        #insulin.move_to([-100,0,0])
+        x = (30 * 0.1) - (0.1 * step)
+        y = (30*2) - (2*step)
+        insulin.move_offset([x, y, 0])
     
     return Scene(camera,
                  objects=[light] + insulin.povray_molecule + INSULIN_RECEPTOR.povray_molecule)
