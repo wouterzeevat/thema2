@@ -64,20 +64,20 @@ def frame(step):
         camera = Camera('location', [0, 0, -200], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
 
-        #ins_id, atom_pos = get_ins(PATH_LINUX)
-        #alphact = atom_pos["P"]
-        #alphact_stage_one_sliced = []
-        #alphact_stage_two_sliced = []
+        ins_id, atom_pos = get_ins(PATH_LINUX)
+        alphact = atom_pos["P"]
+        alphact_stage_one_sliced = []
+        alphact_stage_two_sliced = []
 
-        #INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
+        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
         
 
 
-        #for pos in alphact:
-        #    if pos in range(10014, 10211):
-        #        alphact_stage_one_sliced.append(pos)
-        #    if pos in range(10115, 10211):
-        #        alphact_stage_two_sliced.append(pos)
+        for pos in alphact:
+            if pos in range(10014, 10211):
+                alphact_stage_one_sliced.append(pos)
+            if pos in range(10115, 10211):
+                alphact_stage_two_sliced.append(pos)
         
         if step == 31:
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
@@ -93,12 +93,7 @@ def frame(step):
             alphact_stage_two_sliced += atom_pos["N"]
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
-        if step == 35:
-            INSULIN_RECEPTOR_SECOND_PDBFILE = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/3w11.pdb", center=False, offset=[-10, 8, -5])
-            ins_id_two, atom_pos_two = get_ins("/homes/kdijkstra/thema2/pdb/3w11.pdb")
-            alphact_second_pdbfile = atom_pos_two["F"]
-            alphact_stage_one_sliced_mol = INSULIN_RECEPTOR_SECOND_PDBFILE.divide(alphact_second_pdbfile, "alphact_three")
-            alphact_stage_one_sliced_mol.move_to([0,0,0])
+        
 
         
     
@@ -121,7 +116,7 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_png(frame, 35)
+    pypovray.render_scene_to_mp4(frame, range(31, 35))
 
 # + INSULIN_RECEPTOR.povray_molecule
 # + insulin.povray_molecule
