@@ -64,10 +64,10 @@ def frame(step):
         camera = Camera('location', [0, 0, -200], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
 
-        ins_id, atom_pos = get_ins(PATH_LINUX)
-        alphact = atom_pos["P"]
-        alphact_stage_one_sliced = []
-        alphact_stage_two_sliced = []
+        #ins_id, atom_pos = get_ins(PATH_LINUX)
+        #alphact = atom_pos["P"]
+        #alphact_stage_one_sliced = []
+        #alphact_stage_two_sliced = []
 
         #INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
         
