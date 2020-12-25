@@ -94,8 +94,8 @@ def frame(step):
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
         if step == 35:
-            INSULIN_RECEPTOR_SECOND_PDBFILE = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/3w12.pdb", center=False, offset=[-10, 8, -5])
-            ins_id_two, atom_pos_two = get_ins("/homes/kdijkstra/thema2/pdb/3w12.pdb")
+            INSULIN_RECEPTOR_SECOND_PDBFILE = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/3w11.pdb", center=False, offset=[-10, 8, -5])
+            ins_id_two, atom_pos_two = get_ins("/homes/kdijkstra/thema2/pdb/3w11.pdb")
             alphact_second_pdbfile = atom_pos_two["F"]
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR_SECOND_PDBFILE.divide(alphact_second_pdbfile, "alphact_three")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
