@@ -73,11 +73,11 @@ def frame(step):
         
 
 
-        for pos in alphact:
-            if pos in range(10014, 10211):
-                alphact_stage_one_sliced.append(pos)
-            if pos in range(10115, 10211):
-                alphact_stage_two_sliced.append(pos)
+        #for pos in alphact:
+        #    if pos in range(10014, 10211):
+        #        alphact_stage_one_sliced.append(pos)
+        #    if pos in range(10115, 10211):
+        #        alphact_stage_two_sliced.append(pos)
         
         if step == 31:
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
