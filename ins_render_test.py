@@ -89,7 +89,9 @@ def frame(step):
         if step == 33:
             alphact_stage_one_sliced += atom_pos["N"]
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+            insulin_divided = alphact_stage_one_sliced_mol.divide(atom_pos["N"], "insulin")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
+            insulin_divided.move_to([0,100,0])
         if step == 34:
             alphact_stage_two_sliced += atom_pos["N"]
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
