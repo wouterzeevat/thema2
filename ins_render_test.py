@@ -18,6 +18,7 @@ from vapory import Sphere, Scene, LightSource, Camera
 import math
 import argparse
 from read_pdb import get_ins
+from legend import legend
 
 PATH = "..\\thema2\\pdb\\6ce7.pdb"
 PATH_LINUX = "/homes/kdijkstra/thema2/pdb/6ce7.pdb"
