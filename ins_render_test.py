@@ -97,7 +97,8 @@ def frame(step):
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
         if step == 35:
-            
+            ETHANOL = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/ethanol.pdb", center=False, offset=[-10, 8, -5])
+            ETHANOL.move_to([100,0,0])
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
             alphact_stage_one_sliced_mol.move_to([0,0,0])
 
@@ -106,7 +107,7 @@ def frame(step):
         
     
     return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule  )
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + ETHANOL.povray_molecule )
 
     
 def main(args):
