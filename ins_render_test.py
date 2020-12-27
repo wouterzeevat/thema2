@@ -96,12 +96,18 @@ def frame(step):
             alphact_stage_two_sliced += atom_pos["N"]
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
+        if step == 35:
+            insulin_alpha_chain = INSULIN_RECEPTOR.divide(atom_pos["N"], 'insulin_alpha_chain')
+            insulin_alpha_chain.move_to([0,100,0])
+            alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+            alphact_stage_one_sliced_mol.move_to([0,0,0])
+
         
 
         
     
     return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha_chain.povray_molecule )
 
     
 def main(args):
