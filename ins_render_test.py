@@ -19,6 +19,7 @@ import math
 import argparse
 from read_pdb import get_ins
 from legend import legend
+from molecule_import import create_ethanol
 
 PATH = "..\\thema2\\pdb\\6ce7.pdb"
 PATH_LINUX = "/homes/kdijkstra/thema2/pdb/6ce7.pdb"
