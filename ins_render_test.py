@@ -96,12 +96,9 @@ def frame(step):
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
         if step == 35:
-            methane = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/methane.pdb", center=False, offset=[-10, 8, -5])
-            methane.move_to([0,0,0])
-            pentane = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/pentane.pdb", center=False, offset=[-10, 8, -5])
-            pentane.move_to([50,0,0])
+            
             return Scene(camera,
-                 objects=[light] + methane.povray_molecule + pentane.povray_molecule)
+                 objects=[light] )
             
 
         
