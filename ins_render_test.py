@@ -100,6 +100,8 @@ def frame(step):
             methane.move_to([0,0,0])
             pentane = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/pentane.pdb", center=False, offset=[-10, 8, -5])
             pentane.move_to([50,0,0])
+            return Scene(camera,
+                 objects=[light] + methane.povray_molecule + pentane.povray_molecule)
             
 
         
@@ -107,7 +109,7 @@ def frame(step):
         
     
     return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + methane.povray_molecule + pentane.povray_molecule)
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )
 
     
 def main(args):
