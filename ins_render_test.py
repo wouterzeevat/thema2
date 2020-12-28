@@ -96,6 +96,8 @@ def frame(step):
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
         if step == 35:
+            alphact_stage_one_sliced_mol = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/methane.pdb", center=False, offset=[-10, 8, -5])
+            alphact_stage_one_sliced_mol.move_to([0,0,0])
             
 
         
@@ -121,7 +123,7 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_mp4(frame, 35)
+    pypovray.render_scene_to_mp4(frame, range(31,36))
 
 # + INSULIN_RECEPTOR.povray_molecule
 # + insulin.povray_molecule
