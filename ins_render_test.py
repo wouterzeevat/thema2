@@ -96,15 +96,14 @@ def frame(step):
             alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
             alphact_stage_one_sliced_mol.move_to([0,0,0])
         if step == 35:
-            ethanol = create_ethanol()
-            ethanol.move_to[0,0,0]
+            
 
         
 
         
     
     return Scene(camera,
-                 objects=[light] + ethanol.povray_molecule)
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule)
 
     
 def main(args):
