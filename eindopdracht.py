@@ -106,15 +106,15 @@ def make_tyrine(loc, size):
 
     tyr = []
     y_always = [13, 13, 10, 10]
+    x_text = [-3, 5, -3, 5]
     x_end = [-5, 5, -5, 5]
     x = loc[0]
     y = loc[1]
-    z = loc[2]
+    z = loc[2] + 7
     for _ in range(4):
         tyr.append(Cylinder([x, y-size * y_always[_], z], [x-size*x_end[_], y-size*y_always[_], z], size, cyl_model))
-        tyr.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('Tyr')), 0,
-                        [x_end[_], y_always[_], z],
-                        text_model, 'scale', 10))
+        text = Text('ttf', '"timrom.ttf"', '"{}"'.format(str('Tyr')), 2, [0, 0, 0], text_model, 'scale', 5, 'translate', [x-size*x_text[_], y-size*y_always[_], z - 7])
+        tyr.append(text)
     return tyr
 
 
@@ -174,7 +174,7 @@ def frame(step):
 
     # Return the Scene object containing all objects for rendering
     return Scene(camera,
-                 objects=[models.default_light] + tyrine)#+ membrane + receptor + tyrine + lights)
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
 
 
 def main(args):
