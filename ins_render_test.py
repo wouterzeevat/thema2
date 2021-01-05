@@ -120,7 +120,14 @@ def frame(step):
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
             elif step > step_start+10 and step <= step_start+20:
-                pass
+                camera = Camera('location', [-40, 0, -200], 'look_at', [0, 0, 0])
+            
+                alphact_stage_one_sliced += atom_pos["N"]
+                alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+
+                return Scene(camera,
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
+                
 
 
             
@@ -148,7 +155,7 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_mp4(frame, range(36,47))
+    pypovray.render_scene_to_mp4(frame, range(36,57))
 
 # + INSULIN_RECEPTOR.povray_molecule
 # + insulin.povray_molecule
