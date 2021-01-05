@@ -122,7 +122,12 @@ def frame(step):
                 
                 opacity = (step - step_start) * 0.1 
                 molecule_model = Pigment('transmit', opacity)
+                molecule_model = (Pigment('color', [1, 1, 1], 'transmit', 0.96),
+                    Interior('ior', 1.05), 
+                    Finish('phong', 0.5, 'reflection', 0.01))
+
                 INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5], model=molecule_model)
+                INSULIN_RECEPTOR.move_to([0,0,0])
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
                 #Pigment('transmit', opacity) 
 
