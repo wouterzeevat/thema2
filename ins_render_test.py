@@ -121,8 +121,8 @@ def frame(step):
             elif step > step_start+10 and step <= step_start+20:
                 
                 opacity = (step - step_start) * 0.1 
-                alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one', 
-                    Pigment('transmit', opacity) )
+                alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+                #Pigment('transmit', opacity) 
 
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )
