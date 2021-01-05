@@ -109,7 +109,7 @@ def frame(step):
         if step >= step_start:
             if step <= step_start+10:
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-                rotation = (10 - step - step_start) * 0.1
+                rotation = (10 + step - step_start) * 0.1
                 alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
                 insulin_alpha = INSULIN_RECEPTOR.divide(atom_pos["N"], "alphact_two")
                 insulin_alpha.move_offset([10,0,0])
