@@ -71,7 +71,8 @@ def frame(step):
         alphact_stage_one_sliced = []
         alphact_stage_two_sliced = []
 
-        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=True, offset=[-10, 8, -5])
+        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
+        INSULIN_RECEPTOR.move_to([0,0,0])
         
 
 
