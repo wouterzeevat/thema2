@@ -71,7 +71,7 @@ def frame(step):
         alphact_stage_one_sliced = []
         alphact_stage_two_sliced = []
 
-        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5])
+        INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=True, offset=[-10, 8, -5])
         
 
 
@@ -102,7 +102,18 @@ def frame(step):
             insulin_alpha.move_to([50,0,0])
             return Scene(camera,
                  objects=[light] + insulin_alpha.povray_molecule + alphact_stage_two_sliced_mol.povray_molecule)
-       
+        
+        #simulation
+        step_start = 36
+        if step >= step_start:
+            if step <= step_start+10:
+                alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+                rotation = (10 - step - step_start) * 0.1
+                alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
+                return Scene(camera,
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule)
+
+
             
 
         
@@ -128,7 +139,7 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_mp4(frame, range(31,36))
+    pypovray.render_scene_to_mp4(frame, range(36,47))
 
 # + INSULIN_RECEPTOR.povray_molecule
 # + insulin.povray_molecule
