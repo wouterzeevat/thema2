@@ -120,6 +120,7 @@ def frame(step):
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
             elif step > step_start+10 and step <= step_start+20:
+                pass
 
 
             
