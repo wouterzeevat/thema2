@@ -111,7 +111,7 @@ def frame(step):
                 camera = Camera('location', [-40, 0, -200], 'look_at', [0, 0, 0])
                 
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-                rotation = (10 + step - step_start) * 0.1
+                rotation = (step - step_start - 10) * 0.1
                 alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
                 
                 insulin_alpha = INSULIN_RECEPTOR.divide(atom_pos["N"], "alphact_two")
@@ -119,6 +119,7 @@ def frame(step):
                 
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
+            elif step > step_start+10 and step <= step_start+20:
 
 
             
