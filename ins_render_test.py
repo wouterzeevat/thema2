@@ -111,8 +111,10 @@ def frame(step):
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
                 rotation = (10 - step - step_start) * 0.1
                 alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
+                insulin_alpha = INSULIN_RECEPTOR.divide(atom_pos["N"], "alphact_two")
+                insulin_alpha.move_to([50,0,0])
                 return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule)
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
 
 
             
