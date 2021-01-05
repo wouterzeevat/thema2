@@ -126,7 +126,7 @@ def frame(step):
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
 
                 return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )
                 
 
 
