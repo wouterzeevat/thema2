@@ -132,7 +132,7 @@ def frame(step):
                 #Pigment('transmit', opacity) 
 
                 return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )
+                 objects=[light] + INSULIN_RECEPTOR.povray_molecule )
                 
 
 
