@@ -14,7 +14,7 @@ __version__ = "2020.0"
 
 import sys
 from pypovray import pypovray, SETTINGS, models, logger, pdb
-from vapory import Sphere, Scene, LightSource, Camera
+from vapory import Sphere, Scene, LightSource, Camera, Finish, Pigment, Interior
 import math
 import argparse
 from read_pdb import get_ins
@@ -119,8 +119,10 @@ def frame(step):
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
             elif step > step_start+10 and step <= step_start+20:
-            
-                alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+                
+                opacity = (step - step_start) * 0.1 
+                alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one', 
+                    Pigment('transmit', opacity) )
 
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )
