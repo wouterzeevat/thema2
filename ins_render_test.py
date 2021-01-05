@@ -121,6 +121,8 @@ def frame(step):
             elif step > step_start+10 and step <= step_start+20:
                 
                 opacity = (step - step_start) * 0.1 
+                molecule_model = Pigment('transmit', opacity)
+                INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5], model=molecule_model)
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
                 #Pigment('transmit', opacity) 
 
@@ -154,7 +156,7 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_mp4(frame, range(36,57))
+    pypovray.render_scene_to_mp4(frame, range(46,57))
 
 # + INSULIN_RECEPTOR.povray_molecule
 # + insulin.povray_molecule
