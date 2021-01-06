@@ -17,8 +17,15 @@ from pypovray import pypovray, SETTINGS, models, pdb, logger
 from vapory import Scene, Camera, LightSource, Finish, Pigment, Texture, Sphere, Cylinder, Text, LightSource
 from read_pdb import get_ins
 
+
 #global variables
-PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb"
+PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb" #change this to the path on your pc
+INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
+
+INS_ID, ATOM_POS = get_ins(PATH_PDB)
+
+INSULIN_ATOM = ATOM_POS["N"] + ATOM_POS["O"] 
+INSULIN_ATOM = [pos for pos in INSULIN_ATOM if pos not in range(9997, 10003)] #remove because in difference between sheep and human insulin
 
 
 def make_receptor(loc, size=5):
@@ -129,11 +136,21 @@ def zoom_in(frame):
     return
 
 
-def bind_insuline(frame):
+def bind_insuline_complete_ectoddomain(frame):
     """
-    Animating the insuline binding
+    Animating the insuline binding to the insulin receptor ectodomain
     """
-    return
+    camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
+    light = LightSource([0, 0, -100], 'color', [1, 1, 1])
+    INSULIN_RECEPTOR.move_to([0,0,0])
+    insulin = INSULIN_RECEPTOR.divide(INSULIN_ATOM, 'insulin')
+    
+    x = (90 * 0.1) - (0.03 * frame)
+    y = (90 * 2) - (0.6 * frame)
+    insulin.move_offset([x, y, 0])
+
+    objects =[INSULIN_RECEPTOR, insulin, light]
+    return camera, objects
 
 
 def zoom_out(frame):
@@ -175,6 +192,10 @@ def frame(step):
     receptor = make_receptor([0, 0, -2], 5)
     membrane = make_membrane([0, 0, 0], 10, 5)
     tyrine = make_tyrine([0, 0, -2], 5)
+
+    if step > 240 and step < 330:
+        camera, objects = bind_insuline_complete_ectoddomain(frame)
+        return camera, objects
 
     # Return the Scene object containing all objects for rendering
     return Scene(camera,
