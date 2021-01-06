@@ -20,7 +20,6 @@ from read_pdb import get_ins
 
 #global variables
 PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb" #change this to the path on your pc
-INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
 
 INS_ID, ATOM_POS = get_ins(PATH_PDB)
 
@@ -196,7 +195,7 @@ def frame(step):
     if step > 240 and step <= 330:
         camera, INSULIN_RECEPTOR, insulin, light = bind_insuline_complete_ectoddomain(step)
         return Scene(camera,
-                 objects=[INSULIN_RECEPTOR, insulin, light])
+                 objects=[light] + INSULIN_RECEPTOR.povray_molecule + insulin.povray_molecule )
 
     # Return the Scene object containing all objects for rendering
     return Scene(camera,
@@ -215,9 +214,7 @@ def main(args):
         else:
             pypovray.render_scene_to_png(frame, int(args[1]))
     elif len(args) < 4:
-        #pypovray.render_scene_to_mp4(frame, range(int(args[1]), int(args[2]) + 1))
         pypovray.render_scene_to_mp4(frame, range(int(args[1]), int(args[2]) + 1))
-    
     else:
         pydoc.help(__name__)
 
