@@ -195,7 +195,8 @@ def frame(step):
 
     if step > 240 and step < 330:
         camera, objects = bind_insuline_complete_ectoddomain(step)
-        return camera, objects
+        return Scene(camera,
+                 objects=[objects])
 
     # Return the Scene object containing all objects for rendering
     return Scene(camera,
