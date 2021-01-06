@@ -17,6 +17,9 @@ from pypovray import pypovray, SETTINGS, models, pdb, logger
 from vapory import Scene, Camera, LightSource, Finish, Pigment, Texture, Sphere, Cylinder, Text, LightSource
 from read_pdb import get_ins
 
+#global variables
+PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb"
+
 
 def make_receptor(loc, size=5):
     """
