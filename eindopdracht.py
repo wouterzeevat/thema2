@@ -192,7 +192,7 @@ def frame(step):
     membrane = make_membrane([0, 0, 0], 10, 5)
     tyrine = make_tyrine([0, 0, -2], 5)
 
-    if step > 240 and step < 330:
+    if step > 240 and step <= 330:
         camera, INSULIN_RECEPTOR, insulin, light = bind_insuline_complete_ectoddomain(step)
         return Scene(camera,
                  objects=[INSULIN_RECEPTOR, insulin, light])
