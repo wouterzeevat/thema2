@@ -111,7 +111,7 @@ def frame(step):
             if step <= step_start+10:
                 
                 for num in range(10014, 10115):
-                    if num < (step - step_start - 10) * round(101/10) + 10014:
+                    if num < (step - step_start) * round(101/10) + 10014:
                         alphact_stage_one_sliced.remove(num)
 
 
