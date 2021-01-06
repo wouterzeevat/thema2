@@ -77,7 +77,7 @@ def frame(step):
 
 
         for pos in alphact:
-            if pos in range(10014, 10211):
+            if pos in range(10014, 10171):
                 alphact_stage_one_sliced.append(pos)
             if pos in range(10115, 10211):
                 alphact_stage_two_sliced.append(pos)
@@ -104,11 +104,17 @@ def frame(step):
             return Scene(camera,
                  objects=[light] + insulin_alpha.povray_molecule + alphact_stage_two_sliced_mol.povray_molecule)
         
+
         #simulation
         step_start = 36
         if step >= step_start:
             if step <= step_start+10:
                 
+                for num in range(10014, 10115):
+                    if num < (step - step_start - 10) * round(101/10) + 10014:
+                        alphact_stage_one_sliced.remove(num)
+
+
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
                 rotation = (step - step_start - 10) * -0.1
                 alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
@@ -119,14 +125,9 @@ def frame(step):
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
             elif step > step_start+10 and step <= step_start+20:
-                molecule_model = (Pigment('color', [1, 1, 1], 'transmit', 0.96),
-                    Interior('ior', 1.05), 
-                    Finish('phong', 0.5, 'reflection', 0.01))
-
-                METHANE = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/methane.pdb", center=False, offset=[-10, 8, -5], model=molecule_model)
-                METHANE.move_to([0,0,0])
+                
                 return Scene(camera,
-                 objects=[light] + METHANE.povray_molecule )
+                 objects=[light])
                 
 
 
