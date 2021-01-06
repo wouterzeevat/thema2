@@ -61,6 +61,8 @@ def frame(step):
         y = (30*2) - (2*step)
         insulin.move_offset([x, y, 0])
     
+    return Scene(camera,
+                 objects=[light] + INSULIN_RECEPTOR.povray_molecule + insulin.povray_molecule )
 
     if step > 30:
         camera = Camera('location', [-40, 0, -200], 'look_at', [0, 0, 0])
@@ -103,7 +105,9 @@ def frame(step):
             insulin_alpha.move_to([50,0,0])
             return Scene(camera,
                  objects=[light] + insulin_alpha.povray_molecule + alphact_stage_two_sliced_mol.povray_molecule)
-        
+    
+    return Scene(camera,
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )    
 
         #simulation
         step_start = 36
