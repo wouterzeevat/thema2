@@ -119,20 +119,14 @@ def frame(step):
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
             elif step > step_start+10 and step <= step_start+20:
-                
-                opacity = (step - step_start) * 0.1 
-                molecule_model = Pigment('transmit', opacity)
                 molecule_model = (Pigment('color', [1, 1, 1], 'transmit', 0.96),
                     Interior('ior', 1.05), 
                     Finish('phong', 0.5, 'reflection', 0.01))
 
-                INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_LINUX, center=False, offset=[-10, 8, -5], model=molecule_model)
-                INSULIN_RECEPTOR.move_to([0,0,0])
-                alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-                #Pigment('transmit', opacity) 
-
+                METHANE = pdb.PDBMolecule("/homes/kdijkstra/thema2/pdb/methane.pdb", center=False, offset=[-10, 8, -5], model=molecule_model)
+                METHANE.move_to([0,0,0])
                 return Scene(camera,
-                 objects=[light] + INSULIN_RECEPTOR.povray_molecule )
+                 objects=[light] + METHANE.povray_molecule )
                 
 
 
