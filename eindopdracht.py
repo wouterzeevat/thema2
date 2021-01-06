@@ -142,6 +142,7 @@ def bind_insuline_complete_ectoddomain(frame):
     """
     camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
+    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
     insulin = INSULIN_RECEPTOR.divide(INSULIN_ATOM, 'insulin')
     
