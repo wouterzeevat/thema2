@@ -106,9 +106,7 @@ def frame(step):
             return Scene(camera,
                  objects=[light] + insulin_alpha.povray_molecule + alphact_stage_two_sliced_mol.povray_molecule)
     
-    return Scene(camera,
-                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule )    
-
+    
         #simulation
         step_start = 36
         if step >= step_start:
