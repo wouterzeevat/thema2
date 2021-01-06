@@ -194,7 +194,7 @@ def frame(step):
     tyrine = make_tyrine([0, 0, -2], 5)
 
     if step > 240 and step < 330:
-        camera, objects = bind_insuline_complete_ectoddomain(frame)
+        camera, objects = bind_insuline_complete_ectoddomain(step)
         return camera, objects
 
     # Return the Scene object containing all objects for rendering
