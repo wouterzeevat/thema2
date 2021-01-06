@@ -215,7 +215,9 @@ def main(args):
         else:
             pypovray.render_scene_to_png(frame, int(args[1]))
     elif len(args) < 4:
+        #pypovray.render_scene_to_mp4(frame, range(int(args[1]), int(args[2]) + 1))
         pypovray.render_scene_to_mp4(frame, range(int(args[1]), int(args[2]) + 1))
+    
     else:
         pydoc.help(__name__)
 
