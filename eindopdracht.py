@@ -149,8 +149,7 @@ def bind_insuline_complete_ectoddomain(frame):
     y = (90 * 2) - (0.6 * frame)
     insulin.move_offset([x, y, 0])
 
-    objects =[INSULIN_RECEPTOR, insulin, light]
-    return camera, objects
+    return camera, INSULIN_RECEPTOR, insulin, light
 
 
 def zoom_out(frame):
@@ -194,9 +193,9 @@ def frame(step):
     tyrine = make_tyrine([0, 0, -2], 5)
 
     if step > 240 and step < 330:
-        camera, objects = bind_insuline_complete_ectoddomain(step)
+        camera, INSULIN_RECEPTOR, insulin, light = bind_insuline_complete_ectoddomain(step)
         return Scene(camera,
-                 objects=[objects])
+                 objects=[INSULIN_RECEPTOR, insulin, light])
 
     # Return the Scene object containing all objects for rendering
     return Scene(camera,
