@@ -113,7 +113,9 @@ def frame(step):
                 for num in range(10014, 10115):
                     if num < (step - step_start) * round(101/10) + 10014:
                         alphact_stage_one_sliced.remove(num)
-
+                for num in range(10171, 10211):
+                    if num > (step - step_start) * round(40/10) + 10171:
+                        alphact_stage_one_sliced += num
 
                 alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
                 rotation = (step - step_start - 10) * -0.1
@@ -125,9 +127,9 @@ def frame(step):
                 return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule)
             elif step > step_start+10 and step <= step_start+20:
-                
+                alphact_stage_two_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, "alphact_two")
                 return Scene(camera,
-                 objects=[light])
+                 objects=[light] + alphact_stage_two_sliced_mol.povray_molecule)
                 
 
 
@@ -156,7 +158,7 @@ def main(args):
 if __name__ == '__main__':
     #sys.exit(main(sys.argv))
     #pypovray.render_scene_to_png(frame)
-    pypovray.render_scene_to_mp4(frame, range(36,47))
+    pypovray.render_scene_to_mp4(frame, range(36,48))
 
 # + INSULIN_RECEPTOR.povray_molecule
 # + insulin.povray_molecule
