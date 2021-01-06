@@ -112,7 +112,7 @@ def frame(step):
                 
                 for num in range(10014, 10115):
                     if num < (step - step_start) * round(101/10) + 10014:
-                        if num not in alphact_stage_two_sliced_mol:
+                        if num not in alphact_stage_two_sliced:
                             alphact_stage_one_sliced.remove(num)
                 for num in range(10171, 10211):
                     if num > (step - step_start) * round(40/10) + 10171:
