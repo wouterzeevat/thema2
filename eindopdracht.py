@@ -164,6 +164,7 @@ def insulin_bonded_to_ectodomain(frame):
 
 
 def alphact_conformational_change(frame):
+    pass
 
 
 def zoom_out(frame):
