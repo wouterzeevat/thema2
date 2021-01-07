@@ -146,7 +146,7 @@ def bind_insuline_complete_ectodomain(frame):
     
     
     insulin = INSULIN_RECEPTOR.divide(INSULIN_ATOM, 'insulin')
-    x = 30 - ((frame - 240) / 2)
+    x = -30 - ((frame - 240) / 2)
     y = 120 - ( 2 * (frame - 240) )
     insulin.move_offset([x, y, 0])
     return camera, INSULIN_RECEPTOR, insulin, light
@@ -161,6 +161,9 @@ def insulin_bonded_to_ectodomain(frame):
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
     return camera, INSULIN_RECEPTOR, light
+
+
+def alphact_conformational_change(frame):
 
 
 def zoom_out(frame):
