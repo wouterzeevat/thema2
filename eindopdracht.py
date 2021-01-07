@@ -19,7 +19,7 @@ from read_pdb import get_ins
 
 
 #global variables
-PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb" #change this to the path on your pc
+PATH_PDB = "/homes/whzeevat/povray_projects/thema2/pdb/6ce7.pdb" #change this to the path on your pc
 
 INS_ID, ATOM_POS = get_ins(PATH_PDB)
 
@@ -128,11 +128,16 @@ def make_tyrine(loc, size):
     return tyr
 
 
-def zoom_in(frame):
+def bind_schematic(frame, size):
     """
     Animating the zooming in part
     """
-    return
+
+    insuline_model = Texture(Pigment('color', [0, 1, 1], ), Finish('reflection', 0))
+
+    insuline = []
+    insuline.append(Sphere([0, 0, 0], size * 3, insuline_model))
+    return insuline
 
 
 def bind_insuline_complete_ectodomain(frame):
@@ -206,11 +211,20 @@ def frame(step):
     membrane = make_membrane([0, 0, 0], 10, 5)
     tyrine = make_tyrine([0, 0, -2], 5)
 
-    if step in range(240, 301):
+
+    seconds = step / 30
+    if seconds < 1:
+        return Scene(camera,
+                objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
+    elif seconds < 4:
+        insuline = bind_schematic(step, 5)
+        return Scene(camera,
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline)
+    if seconds < 8:
         camera, INSULIN_RECEPTOR, insulin, light = bind_insuline_complete_ectodomain(step)
         return Scene(camera,
                  objects=[light] + INSULIN_RECEPTOR.povray_molecule + insulin.povray_molecule )
-    if step in range(301, 330):
+    if step in 11:
         camera, INSULIN_RECEPTOR, light = insulin_bonded_to_ectodomain(step)
         return Scene(camera,
                  objects=[light] + INSULIN_RECEPTOR.povray_molecule)
