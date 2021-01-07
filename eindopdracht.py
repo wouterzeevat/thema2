@@ -21,8 +21,6 @@ from read_pdb import get_ins
 #global variables
 PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb" #change this to the path on your pc
 
-INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
-
 INS_ID, ATOM_POS = get_ins(PATH_PDB)
 
 INSULIN_ATOM = ATOM_POS["N"] + ATOM_POS["O"] 
@@ -143,6 +141,7 @@ def bind_insuline_complete_ectodomain(frame):
     """
     camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
+    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
     
     
@@ -159,6 +158,7 @@ def insulin_bonded_to_ectodomain(frame):
     """
     camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
+    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
     return camera, INSULIN_RECEPTOR, light
 
