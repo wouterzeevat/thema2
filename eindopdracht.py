@@ -129,22 +129,54 @@ def make_tyrine(loc, size):
 
 
 def bind_schematic(frame, size):
+
     """
-    Animating the zooming in part
+    Animating the binding part schematicly
     """
 
-    insuline_model = Texture(Pigment('color', [0, 1, 1], ), Finish('reflection', 0))
+    insuline_model = Texture(Pigment('color', [0, 1, 0.5], ), Finish('reflection', 0))
+    text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
 
     insuline = []
-    insuline.append(Sphere([0, 0, 0], size * 3, insuline_model))
+    s = size
+
+    # frame 30 -> 120
+    if frame < 120:
+        x = (frame - 30) * (24.5*s / 90) - 30*s
+        y = (frame - 30) * (-15*s / 90) + 20*s 
+    else:
+        x = -5*s
+        y = 5*s
+
+    insuline.append(Sphere([x, y, 0], s * 1.5, insuline_model))
+    insuline.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('Insulin')), 0.5, [0, 0, 0], text_model, 'scale', 5, 'translate', [x - s, y-0.5*s, -2*s]))
+
+    insuline.append(Sphere([0-x, y, 0], s * 1.5, insuline_model))
+    insuline.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('Insulin')), 0.5, [0, 0, 0], text_model, 'scale', 5, 'translate', [0-x -1.4*s, y-0.5*s, -2*s]))
+
     return insuline
+
+
+def move_camera(frame, frames, start, end, start_frame):
+    """
+    Animating the zooming into the binding process part
+    """ 
+
+    # Frame 120 -> 180
+    x = (frame - start_frame) * ((end[0] - start[0]) / frames) + start[0]
+    y = (frame - start_frame) * ((end[1] - start[1]) / frames) + start[1]
+    z = (frame - start_frame) * ((end[2] - start[2]) / frames) + start[2]
+
+    camera = Camera('location', [x, y, z], 'look_at', [x, y, z + 1])
+
+    return camera
 
 
 def bind_insuline_complete_ectodomain(frame):
     """
-    Animating the insuline binding to the insulin receptor ectodomain
+    Animating the insuline binding to the insulin receptor ectodomain part
     """
-    camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
+
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
@@ -153,36 +185,50 @@ def bind_insuline_complete_ectodomain(frame):
     insulin = INSULIN_RECEPTOR.divide(INSULIN_ATOM, 'insulin')
     y = 120 - ( 2 * (frame - 240) )
     insulin.move_offset([0, y, 0])
-    return camera, INSULIN_RECEPTOR, insulin, light
+    return INSULIN_RECEPTOR, insulin, light
     
 
 def insulin_bonded_to_ectodomain(frame):
     """
     Showing the complete ectodomain of the insulin receptor in complex with one insulin molecule
     """
-    camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
+
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
-    return camera, INSULIN_RECEPTOR, light
+    return INSULIN_RECEPTOR, light
 
 
 def alphact_conformational_change(frame):
     pass
 
 
-def zoom_out(frame):
-    """
-    Animating the zooming out part
-    """
-    return
-
-
-def bind_phosphorus(frame):
+def bind_phosphorus(frame, size):
     """
     Animating the process of phosfor binding to the Tyr
     """
-    return
+
+    phosphorus_model = Texture(Pigment('color', [1, 0, 1], ), Finish('reflection', 0))
+    text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
+
+    phosphorus = []
+    s = size
+
+    # frame 390 -> 480
+    x_locs = [[-20, -5], [20, 5], [-20, -5], [20, 5]]
+    y_locs = [13, 13, 10, 10]
+
+    for _ in range(4):
+        if frame < 480:
+            x = (frame - 390) * ((x_locs[_][1]*s - x_locs[_][0]*s) / 90) + x_locs[_][0]*s
+            y = 0 - y_locs[_] * s
+        else:
+            x = x_locs[_][1]*s
+            y = y_locs[_]*s
+        phosphorus.append(Sphere([x, y, 0], s * 1.2, phosphorus_model))
+        phosphorus.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('P')), 0.5, [0, 0, 0], text_model, 'scale', 5, 'translate', [x - s, y-0.5*s, -1*s]))
+    
+    return phosphorus
 
 
 def bind_IRS(frame):
@@ -213,26 +259,53 @@ def frame(step):
 
 
     seconds = step / 30
-    if seconds < 1:
+    if seconds < 1:  # Frame 0 -> 30
         return Scene(camera,
                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
-    elif seconds < 4:
-        insuline = bind_schematic(step, 5)
+
+    elif seconds < 4:  # Frame 30 -> 120
+        insuline_schematic = bind_schematic(step, 5)
         return Scene(camera,
-                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline)
-    if seconds < 8:
-        camera, INSULIN_RECEPTOR, insulin, light = bind_insuline_complete_ectodomain(step)
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic)
+
+    elif seconds < 6:  # Frame 120 -> 180
+        insuline_schematic = bind_schematic(step, 5)
+        camera = move_camera(step, 60, [0, 7, -200], [-20, 20, 3], 120)
         return Scene(camera,
-                 objects=[light] + INSULIN_RECEPTOR.povray_molecule + insulin.povray_molecule )
-    if step in 11:
-        camera, INSULIN_RECEPTOR, light = insulin_bonded_to_ectodomain(step)
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic)
+
+    elif seconds < 8:  # Frame 180 -> 240
+        camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
+        INSULIN_RECEPTOR, insulin, light = bind_insuline_complete_ectodomain(step)
+        return Scene(camera,
+                 objects=[light] + INSULIN_RECEPTOR.povray_molecule + insulin.povray_molecule)
+
+    elif seconds < 11: # Frame 240 -> 330
+        camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
+        INSULIN_RECEPTOR, light = insulin_bonded_to_ectodomain(step)
         return Scene(camera,
                  objects=[light] + INSULIN_RECEPTOR.povray_molecule)
 
+    elif seconds < 13:  # Frame 330 -> 390
+        if seconds < 11.7:  # Frame 330 -> 351
+            camera = move_camera(step, 21, [0, 0, -300], [0, 0, 3], 330)
+            INSULIN_RECEPTOR, light = insulin_bonded_to_ectodomain(step)
+            return Scene(camera,
+                 objects=[light] + INSULIN_RECEPTOR.povray_molecule)
 
-    # Return the Scene object containing all objects for rendering
+        else:  # Frame 351 -> 390
+            camera = move_camera(step, 39, [0, 0, 3], [0, 7, -200], 351)
+            insuline_schematic = bind_schematic(step, 5)
+            return Scene(camera,
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic)
+    
+    elif seconds < 15:  # Frame 390 -> 480
+            insuline_schematic = bind_schematic(step, 5)
+            phosphorus = bind_phosphorus(step, 5)
+            return Scene(camera,
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic + phosphorus)
     return Scene(camera,
-                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
+        objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
 
 
 def main(args):
