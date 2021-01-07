@@ -225,8 +225,8 @@ def bind_phosphorus(frame, size):
         else:
             x = x_locs[_][1]*s
             y = y_locs[_]*s
-        phosphorus.append(Sphere([x, y, 0], s * 1.2, phosphorus_model))
-        phosphorus.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('P')), 0.5, [0, 0, 0], text_model, 'scale', 5, 'translate', [x - s, y-0.5*s, -1*s]))
+        phosphorus.append(Sphere([x, y, 2], s * 1.2, phosphorus_model))
+        phosphorus.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('P')), 0.5, [0, 0, 0], text_model, 'scale', 7, 'translate', [x - 0.2*s, y-0.5*s, -1.5*s]))
     
     return phosphorus
 
@@ -299,7 +299,7 @@ def frame(step):
             return Scene(camera,
                  objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic)
     
-    elif seconds < 15:  # Frame 390 -> 480
+    elif seconds < 16:  # Frame 390 -> 480
             insuline_schematic = bind_schematic(step, 5)
             phosphorus = bind_phosphorus(step, 5)
             return Scene(camera,
