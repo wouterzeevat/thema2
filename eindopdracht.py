@@ -353,14 +353,14 @@ def frame(step):
     elif seconds < 15:
         camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
-        alphact_stage_two_sliced_mol, insulin_alpha = alphains_binding_alphact(frame, alphact_stage_two_sliced)
+        alphact_stage_two_sliced_mol, insulin_alpha = alphains_binding_alphact(step, alphact_stage_two_sliced)
         return Scene(camera,
                  objects=[light] + alphact_stage_two_sliced_mol.povray_molecule + insulin_alpha.povray_molecule )
   
     elif seconds < 16:
         camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
-        alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(frame, alphact_stage_two_sliced)
+        alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(step, alphact_stage_two_sliced)
         return Scene(camera,
                  objects=[light] + alphact_complex_insulinalpha_mol.povray_molecule )
 
