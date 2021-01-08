@@ -27,6 +27,7 @@ INSULIN_ATOM = ATOM_POS["N"] + ATOM_POS["O"]
 INSULIN_ATOM = [pos for pos in INSULIN_ATOM if pos not in range(9997, 10003)] #remove because in difference between sheep and human insulin
 
 
+
 def make_receptor(loc, size=5):
     """
     Creates the receptor and returns the object
@@ -183,7 +184,7 @@ def bind_insuline_complete_ectodomain(frame):
     
     
     insulin = INSULIN_RECEPTOR.divide(INSULIN_ATOM, 'insulin')
-    y = 120 - ( 2 * (frame - 240) )
+    y = 120 - ( 2 * (frame - 180) )
     insulin.move_offset([0, y, 0])
     return INSULIN_RECEPTOR, insulin, light
     
@@ -199,9 +200,41 @@ def insulin_bonded_to_ectodomain(frame):
     return INSULIN_RECEPTOR, light
 
 
-def alphact_conformational_change(frame):
-    pass
+def slice_alphact():
+    alphact = ATOM_POS["P"]
+    alphact_stage_one_sliced = []
+    alphact_stage_two_sliced = []
+    
+    #deze moeten nog naar list comprhensions geschreven worden 
+    for pos in alphact:
+            if pos in range(10014, 10171):
+                alphact_stage_one_sliced.append(pos)
+            if pos in range(10115, 10211):
+                alphact_stage_two_sliced.append(pos)
+    return alphact_stage_one_sliced, alphact_stage_two_sliced
 
+
+def alphact_conformational_change(frame, alphact_stage_one_sliced, alphact_stage_two_sliced):
+    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
+    INSULIN_RECEPTOR.move_to([0,0,0])
+    frame_start = 330
+    
+    for num in range(10014, 10115):
+        if num < (frame - frame_start) * round(101/90) + 10014:
+            alphact_stage_one_sliced.remove(num)
+    for num in range(10171, 10211):
+        if num < (frame - frame_start) * round(40/90) + 10171:
+            alphact_stage_one_sliced.append(num)
+
+    alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
+    rotation = (frame - frame_start - 90) * -0.01
+    alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
+                
+    insulin_alpha = INSULIN_RECEPTOR.divide(ATOM_POS["N"], "alphact_two")
+    insulin_alpha.move_offset([0,30,0])
+                
+    return alphact_stage_one_sliced_mol, insulin_alpha
+        
 
 def bind_phosphorus(frame, size):
     """
@@ -256,7 +289,7 @@ def frame(step):
     receptor = make_receptor([0, 0, -2], 5)
     membrane = make_membrane([0, 0, 0], 10, 5)
     tyrine = make_tyrine([0, 0, -2], 5)
-
+    alphact_stage_one_sliced, alphact_stage_two_sliced = slice_alphact()
 
     seconds = step / 30
     if seconds < 1:  # Frame 0 -> 30
@@ -285,7 +318,15 @@ def frame(step):
         INSULIN_RECEPTOR, light = insulin_bonded_to_ectodomain(step)
         return Scene(camera,
                  objects=[light] + INSULIN_RECEPTOR.povray_molecule)
+    elif seconds < 14: 
+        camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
+        light = LightSource([0, 0, -100], 'color', [1, 1, 1])
+        alphact_stage_one_sliced_mol, insulin_alpha = alphact_conformational_change(drame, alphact_stage_one_sliced, alphact_stage_two_sliced)
+        return Scene(camera,
+                 objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule )
 
+
+'''
     elif seconds < 13:  # Frame 330 -> 390
         if seconds < 11.7:  # Frame 330 -> 351
             camera = move_camera(step, 21, [0, 0, -300], [0, 0, 3], 330)
@@ -304,9 +345,10 @@ def frame(step):
             phosphorus = bind_phosphorus(step, 5)
             return Scene(camera,
                  objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic + phosphorus)
+
     return Scene(camera,
         objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
-
+'''
 
 def main(args):
     """ Main function performing the rendering """
