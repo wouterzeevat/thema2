@@ -19,7 +19,7 @@ from read_pdb import get_ins
 
 
 #global variables
-PATH_PDB = "/homes/whzeevat/povray_projects/thema2/pdb/6ce7.pdb" #change this to the path on your pc
+PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb" #change this to the path on your pc
 
 INS_ID, ATOM_POS = get_ins(PATH_PDB)
 
