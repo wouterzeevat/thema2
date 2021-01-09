@@ -221,7 +221,6 @@ def alphact_conformational_change(frame, alphact_stage_one_sliced, alphact_stage
     INSULIN_RECEPTOR.move_to([0,0,0])
     frame_start = 270
     
-    #FIX
     for num in range(10014, 10115):
         if num < (frame - frame_start) * round(101/60) + 10014:
             if num not in alphact_stage_two_sliced:
@@ -240,7 +239,7 @@ def alphact_conformational_change(frame, alphact_stage_one_sliced, alphact_stage
     return alphact_stage_one_sliced_mol, insulin_alpha
         
 
-def alphains_binding_alphact(frame, alphact_stage_two_sliced): #FIX
+def alphains_binding_alphact(frame, alphact_stage_two_sliced): 
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
     alphact_stage_two_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, 'alphact_two')
@@ -365,6 +364,27 @@ def frame(step):
         alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(step, alphact_stage_two_sliced)
         return Scene(camera,
                  objects=[light] + alphact_complex_insulinalpha_mol.povray_molecule )
+
+    elif seconds < 16: 
+        if seconds < 14.7:
+            camera = move_camera(step, 21, [0, 0, -300], [0, 0, 3], 420)
+            alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(step, alphact_stage_two_sliced)
+            return Scene(camera,
+                 objects=[light] + alphact_complex_insulinalpha_mol.povray_molecule)
+        else:
+            camera = move_camera(step, 39, [0, 0, 3], [0, 7, -200], 351)
+            insuline_schematic = bind_schematic(step, 5)
+            return Scene(camera,
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic)
+    elif seconds < 19:  # Frame 390 -> 480
+            insuline_schematic = bind_schematic(step, 5)
+            phosphorus = bind_phosphorus(step, 5)
+            return Scene(camera,
+                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic + phosphorus)
+
+    return Scene(camera,
+        objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
+
 
 '''
     elif seconds < 13:  # Frame 330 -> 390
