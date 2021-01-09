@@ -219,19 +219,19 @@ def slice_alphact():
 def alphact_conformational_change(frame, alphact_stage_one_sliced, alphact_stage_two_sliced):
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
-    frame_start = 300
+    frame_start = 270
     
     #FIX
     for num in range(10014, 10115):
-        if num < (frame - frame_start) * round(101/90) + 10014:
+        if num < (frame - frame_start) * round(101/60) + 10014:
             if num not in alphact_stage_two_sliced:
                 alphact_stage_one_sliced.remove(num)
     for num in range(10171, 10211):
-        if num < (frame - frame_start) * round(40/90) + 10171:
+        if num < (frame - frame_start) * round(40/60) + 10171:
             alphact_stage_one_sliced.append(num)
 
     alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-    rotation = (frame - frame_start - 90) * -0.01
+    rotation = (frame - frame_start - 60) * -0.01
     alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
                 
     insulin_alpha = INSULIN_RECEPTOR.divide(ATOM_POS["N"], "alphact_two")
@@ -339,27 +339,27 @@ def frame(step):
         return Scene(camera,
                  objects=[light] + INSULIN_RECEPTOR.povray_molecule + insulin.povray_molecule)
 
-    elif seconds < 10: # Frame 240 -> 300
+    elif seconds < 9: # Frame 240 -> 270
         camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
         INSULIN_RECEPTOR, light = insulin_bonded_to_ectodomain(step)
         return Scene(camera,
                  objects=[light] + INSULIN_RECEPTOR.povray_molecule)
     
-    elif seconds < 11: 
+    elif seconds < 11: #Frame 270 -> 330
         camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
         alphact_stage_one_sliced_mol, insulin_alpha = alphact_conformational_change(step, alphact_stage_one_sliced, alphact_stage_two_sliced)
         return Scene(camera,
                  objects=[light] + alphact_stage_one_sliced_mol.povray_molecule + insulin_alpha.povray_molecule )
 
-    elif seconds < 13:
+    elif seconds < 13: #Frame 330 -> 390
         camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
         alphact_stage_two_sliced_mol, insulin_alpha = alphains_binding_alphact(step, alphact_stage_two_sliced)
         return Scene(camera,
                  objects=[light] + alphact_stage_two_sliced_mol.povray_molecule + insulin_alpha.povray_molecule )
   
-    elif seconds < 14:
+    elif seconds < 14: #Frame 390 -> 420
         camera = Camera('location', [0, 0, -300], 'look_at', [0, 0, 0])
         light = LightSource([0, 0, -100], 'color', [1, 1, 1])
         alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(step, alphact_stage_two_sliced)
