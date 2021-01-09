@@ -221,9 +221,11 @@ def alphact_conformational_change(frame, alphact_stage_one_sliced, alphact_stage
     INSULIN_RECEPTOR.move_to([0,0,0])
     frame_start = 300
     
+    #FIX
     for num in range(10014, 10115):
         if num < (frame - frame_start) * round(101/90) + 10014:
-            alphact_stage_one_sliced.remove(num)
+            if num not in alphact_stage_two_sliced:
+                alphact_stage_one_sliced.remove(num)
     for num in range(10171, 10211):
         if num < (frame - frame_start) * round(40/90) + 10171:
             alphact_stage_one_sliced.append(num)
@@ -238,14 +240,14 @@ def alphact_conformational_change(frame, alphact_stage_one_sliced, alphact_stage
     return alphact_stage_one_sliced_mol, insulin_alpha
         
 
-def alphains_binding_alphact(frame, alphact_stage_two_sliced):
+def alphains_binding_alphact(frame, alphact_stage_two_sliced): #FIX
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
     alphact_stage_two_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_two_sliced, 'alphact_two')
     insulin_alpha = INSULIN_RECEPTOR.divide(ATOM_POS["N"], "insulin_alpha")
     frame_start = 390
 
-    insulin_offset = (frame - frame_start + 1) / 2
+    insulin_offset = (60 - frame - frame_start + 1) / 2
     insulin_alpha.move_offset([0,insulin_offset,0])
 
     return alphact_stage_two_sliced_mol, insulin_alpha
