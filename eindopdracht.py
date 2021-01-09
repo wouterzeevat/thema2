@@ -247,7 +247,7 @@ def alphains_binding_alphact(frame, alphact_stage_two_sliced): #FIX
     insulin_alpha = INSULIN_RECEPTOR.divide(ATOM_POS["N"], "insulin_alpha")
     frame_start = 330
 
-    insulin_offset = (60 - frame - frame_start + 1) / 2
+    insulin_offset = (60 - ( frame - frame_start + 1)) / 2
     insulin_alpha.move_offset([0,insulin_offset,0])
 
     return alphact_stage_two_sliced_mol, insulin_alpha
