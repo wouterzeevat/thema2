@@ -368,6 +368,7 @@ def frame(step):
     elif seconds < 16: 
         if seconds < 14.7:
             camera = move_camera(step, 21, [0, 0, -300], [0, 0, 3], 420)
+            light = LightSource([0, 0, -100], 'color', [1, 1, 1])
             alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(step, alphact_stage_two_sliced)
             return Scene(camera,
                  objects=[light] + alphact_complex_insulinalpha_mol.povray_molecule)
