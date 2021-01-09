@@ -206,7 +206,6 @@ def slice_alphact():
     alphact_stage_one_sliced = []
     alphact_stage_two_sliced = []
     
-    #deze moeten nog naar list comprhensions geschreven worden 
     for pos in alphact:
             if pos in range(10014, 10171):
                 alphact_stage_one_sliced.append(pos)
@@ -265,7 +264,7 @@ def bind_phosphorus(frame, size):
     """
     Animating the process of phosfor binding to the Tyr
     """
-
+    '''
     phosphorus_model = Texture(Pigment('color', [1, 0, 1], ), Finish('reflection', 0))
     text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
 
@@ -285,7 +284,27 @@ def bind_phosphorus(frame, size):
             y = y_locs[_]*s
         phosphorus.append(Sphere([x, y, 2], s * 1.2, phosphorus_model))
         phosphorus.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('P')), 0.5, [0, 0, 0], text_model, 'scale', 7, 'translate', [x - 0.2*s, y-0.5*s, -1.5*s]))
-    
+    '''
+
+    phosphorus_model = Texture(Pigment('color', [1, 0, 1], ), Finish('reflection', 0))
+    text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
+
+    phosphorus = []
+    s = size
+
+    # frame 480 -> 570
+    x_locs = [[-20, -5], [20, 5], [-20, -5], [20, 5]]
+    y_locs = [13, 13, 10, 10]
+
+    for _ in range(4):
+        if frame < 570:
+            x = (frame - 480) * ((x_locs[_][1]*s - x_locs[_][0]*s) / 90) + x_locs[_][0]*s
+            y = 0 - y_locs[_] * s
+        else:
+            x = x_locs[_][1]*s
+            y = y_locs[_]*s
+        phosphorus.append(Sphere([x, y, 2], s * 1.2, phosphorus_model))
+        phosphorus.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('P')), 0.5, [0, 0, 0], text_model, 'scale', 7, 'translate', [x - 0.2*s, y-0.5*s, -1.5*s]))
     return phosphorus
 
 
@@ -365,19 +384,23 @@ def frame(step):
         return Scene(camera,
                  objects=[light] + alphact_complex_insulinalpha_mol.povray_molecule )
 
-    elif seconds < 16: 
-        if seconds < 14.7:
+
+    #debugging
+
+    elif seconds < 16: #Frame 420 -> 480
+        if seconds < 14.7: #Frame 420 -> 441
             camera = move_camera(step, 21, [0, 0, -300], [0, 0, 3], 420)
             light = LightSource([0, 0, -100], 'color', [1, 1, 1])
             alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(step, alphact_stage_two_sliced)
             return Scene(camera,
                  objects=[light] + alphact_complex_insulinalpha_mol.povray_molecule)
-        else:
-            camera = move_camera(step, 39, [0, 0, 3], [0, 7, -200], 351)
+        else: #Frame 441 -> 480
+            camera = move_camera(step, 39, [0, 0, 3], [0, 7, -200], 441)
             insuline_schematic = bind_schematic(step, 5)
             return Scene(camera,
                  objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic)
-    elif seconds < 19:  # Frame 390 -> 480
+    
+    elif seconds < 19:   #Frame 480 -> 570
             insuline_schematic = bind_schematic(step, 5)
             phosphorus = bind_phosphorus(step, 5)
             return Scene(camera,
