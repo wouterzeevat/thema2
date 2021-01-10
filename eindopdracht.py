@@ -19,7 +19,7 @@ from read_pdb import get_ins
 
 
 #global variables
-PATH_PDB = "/homes/kdijkstra/thema2/pdb/6ce7.pdb" #change this to the path on your pc
+PATH_PDB = "/homes/whzeevat/povray_projects/thema2/pdb/6ce7.pdb" #change this to the path on your pc
 
 INS_ID, ATOM_POS = get_ins(PATH_PDB)
 
@@ -264,27 +264,6 @@ def bind_phosphorus(frame, size):
     """
     Animating the process of phosfor binding to the Tyr
     """
-    '''
-    phosphorus_model = Texture(Pigment('color', [1, 0, 1], ), Finish('reflection', 0))
-    text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
-
-    phosphorus = []
-    s = size
-
-    # frame 390 -> 480
-    x_locs = [[-20, -5], [20, 5], [-20, -5], [20, 5]]
-    y_locs = [13, 13, 10, 10]
-
-    for _ in range(4):
-        if frame < 480:
-            x = (frame - 390) * ((x_locs[_][1]*s - x_locs[_][0]*s) / 90) + x_locs[_][0]*s
-            y = 0 - y_locs[_] * s
-        else:
-            x = x_locs[_][1]*s
-            y = y_locs[_]*s
-        phosphorus.append(Sphere([x, y, 2], s * 1.2, phosphorus_model))
-        phosphorus.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('P')), 0.5, [0, 0, 0], text_model, 'scale', 7, 'translate', [x - 0.2*s, y-0.5*s, -1.5*s]))
-    '''
 
     phosphorus_model = Texture(Pigment('color', [1, 0, 1], ), Finish('reflection', 0))
     text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
@@ -302,17 +281,34 @@ def bind_phosphorus(frame, size):
             y = 0 - y_locs[_] * s
         else:
             x = x_locs[_][1]*s
-            y = y_locs[_]*s
+            y = 0 - y_locs[_]*s
         phosphorus.append(Sphere([x, y, 2], s * 1.2, phosphorus_model))
         phosphorus.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('P')), 0.5, [0, 0, 0], text_model, 'scale', 7, 'translate', [x - 0.2*s, y-0.5*s, -1.5*s]))
     return phosphorus
 
 
-def bind_IRS(frame):
+def bind_IRS(frame, size):
     """
     Animating the process of IRS binding to the phosfor
     """
-    return
+
+    IRS_model = Texture(Pigment('color', [1, 0, 1], ), Finish('reflection', 0))
+    text_model = Texture(Pigment('color', [1, 1, 0], ), Finish('reflection', 0))
+
+    IRS = []
+    s = size
+
+    # frame 570 -> 630
+    if frame < 630:
+        x = (frame - 570) * ((7*s-30*s) / 60) + 30*s
+        y = -12*s
+    else:
+        x = 7*s
+        y = -12*s
+
+    IRS.append(Sphere([x, y, 0], s * 2, IRS_model))
+    IRS.append(Text('ttf', '"timrom.ttf"', '"{}"'.format(str('IRS')), 0.5, [0, 0, 0], text_model, 'scale', 5, 'translate', [x - s, y, -2*s]))
+    return IRS
 
 
 def activation(frame):
@@ -405,34 +401,19 @@ def frame(step):
             phosphorus = bind_phosphorus(step, 5)
             return Scene(camera,
                  objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic + phosphorus)
-
-    return Scene(camera,
-        objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
-
-
-'''
-    elif seconds < 13:  # Frame 330 -> 390
-        if seconds < 11.7:  # Frame 330 -> 351
-            camera = move_camera(step, 21, [0, 0, -300], [0, 0, 3], 330)
-            INSULIN_RECEPTOR, light = insulin_bonded_to_ectodomain(step)
-            return Scene(camera,
-                 objects=[light] + INSULIN_RECEPTOR.povray_molecule)
-
-        else:  # Frame 351 -> 390
-            camera = move_camera(step, 39, [0, 0, 3], [0, 7, -200], 351)
-            insuline_schematic = bind_schematic(step, 5)
-            return Scene(camera,
-                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic)
     
-    elif seconds < 16:  # Frame 390 -> 480
-            insuline_schematic = bind_schematic(step, 5)
-            phosphorus = bind_phosphorus(step, 5)
-            return Scene(camera,
-                 objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic + phosphorus)
+    elif seconds < 21:   #Frame 570 -> 630
+        insuline_schematic = bind_schematic(step, 5)
+        phosphorus = bind_phosphorus(step, 5)
+        IRS = bind_IRS(step, 5)
+        return Scene(camera,
+            objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic + phosphorus + IRS)
 
+    insuline_schematic = bind_schematic(step, 5)
+    phosphorus = bind_phosphorus(step, 5)
+    IRS = bind_IRS(step, 5)
     return Scene(camera,
-        objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights)
-'''
+        objects=[models.default_light] + tyrine + membrane + receptor + tyrine + lights + insuline_schematic + phosphorus + IRS)
 
 def main(args):
     """ Main function performing the rendering """
