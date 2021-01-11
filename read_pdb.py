@@ -2,7 +2,7 @@
 
 
 """
-Extracts the various atom positions of the molecules in the 6sof.pd file 
+Extracts the various atom positions of the molecules in the 6ce7.pd file 
 """
 
 
@@ -11,7 +11,7 @@ __author__ = "keimpe dijkstra"
 
 import sys
 
-PATH = "..\\thema2\\pdb\\4oga.pdb"
+PATH = "..\\thema2\\pdb\\6ce7.pdb"
 
 
 def get_ins(PATH):
@@ -34,7 +34,9 @@ def get_ins(PATH):
 def main(args):
     ins_id, atom_pos = get_ins(PATH)
     print(ins_id)
-    print(atom_pos["F"])
+    INSULIN_ATOM = atom_pos["N"] + atom_pos["O"] 
+    INSULIN_ATOM = [pos for pos in INSULIN_ATOM if pos not in range(9997, 10003)]
+    print(INSULIN_ATOM)
     return 0
 
 
