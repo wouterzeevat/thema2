@@ -21,9 +21,9 @@ from read_pdb import get_ins
 #global variables
 PATH_PDB = "/homes/whzeevat/povray_projects/thema2/pdb/6ce7.pdb" #change this to the path on your pc
 
-INS_ID, ATOM_POS = get_ins(PATH_PDB)
+INS_ID, ATOM_POS = get_ins(PATH_PDB) #this variable contaains the positions of the atoms in the pdb-file
 
-INSULIN_ATOM = ATOM_POS["N"] + ATOM_POS["O"] 
+INSULIN_ATOM = ATOM_POS["N"] + ATOM_POS["O"] #the position of the atoms in the insulin molecule
 INSULIN_ATOM = [pos for pos in INSULIN_ATOM if pos not in range(9997, 10003)] #remove because in difference between sheep and human insulin
 
 
@@ -177,14 +177,13 @@ def bind_insuline_complete_ectodomain(frame):
     """
     Animating the insuline binding to the insulin receptor ectodomain part
     """
-
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
-    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
-    INSULIN_RECEPTOR.move_to([0,0,0])
+    INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False) #create a the insulin receptor molecule from the pdb-file
+    INSULIN_RECEPTOR.move_to([0,0,0]) #move the insulin receptor to the middle of the simulation
    
-    insulin = INSULIN_RECEPTOR.divide(INSULIN_ATOM, 'insulin')
-    y = 120 - ( 2 * (frame - 180) )
-    insulin.move_offset([0, y, 0])
+    insulin = INSULIN_RECEPTOR.divide(INSULIN_ATOM, 'insulin') #create the insulin molecule by dividing the insulin receptor
+    y = 120 - ( 2 * (frame - 180) ) #setting a y-coordinate for insulin so it moves to the receptor
+    insulin.move_offset([0, y, 0]) #move the insulin from its original pos to one with the y-coordinate
     
     return INSULIN_RECEPTOR, insulin, light
     
@@ -193,7 +192,6 @@ def insulin_bonded_to_ectodomain(frame):
     """
     Showing the complete ectodomain of the insulin receptor in complex with one insulin molecule
     """
-    
     light = LightSource([0, 0, -100], 'color', [1, 1, 1])
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
@@ -202,35 +200,48 @@ def insulin_bonded_to_ectodomain(frame):
 
 
 def slice_alphact():
+    """
+    Create two lists for the alpha peptide molecule.
+    One for the first stage where insulin isn't bonded,
+    and one for the second stage where insulin is bonded.
+    """
     alphact = ATOM_POS["P"]
     alphact_stage_one_sliced = []
     alphact_stage_two_sliced = []
     
     for pos in alphact:
             if pos in range(10014, 10171):
+                #if the atom is in the range of the stage one molecule append it to its list
                 alphact_stage_one_sliced.append(pos)
             if pos in range(10115, 10211):
+                #if the atom is in the range of the stage two molecule append it to its list
                 alphact_stage_two_sliced.append(pos)
     
     return alphact_stage_one_sliced, alphact_stage_two_sliced
 
 
 def alphact_conformational_change(frame, alphact_stage_one_sliced, alphact_stage_two_sliced):
+    """
+    This function simulation the conformational change of the alpha ct peptide with the
+    alpha helix of the insulin molecule
+    """
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
-    frame_start = 270
+    frame_start = 270 #the first frame when this function is called upon
     
     for num in range(10014, 10115):
         if num < (frame - frame_start) * round(101/60) + 10014:
             if num not in alphact_stage_two_sliced:
+                #remove a portion of the atoms that are not in second stage based on the current frame
                 alphact_stage_one_sliced.remove(num)
     for num in range(10171, 10211):
         if num < (frame - frame_start) * round(40/60) + 10171:
+            #add a portion of atoms that are not in the first stage based on the current frame
             alphact_stage_one_sliced.append(num)
 
     alphact_stage_one_sliced_mol = INSULIN_RECEPTOR.divide(alphact_stage_one_sliced, 'alphact_one')
-    rotation = (frame - frame_start - 60) * -0.01
-    alphact_stage_one_sliced_mol.rotate([0,0,1], rotation)
+    rotation = (frame - frame_start - 60) * -0.01 #set a number for the amount the molecule should rotate based on the frame
+    alphact_stage_one_sliced_mol.rotate([0,0,1], rotation) #rotate the molecule on the z axis with the rotation variable
                 
     insulin_alpha = INSULIN_RECEPTOR.divide(ATOM_POS["N"], "alphact_two")
     insulin_alpha.move_offset([0,30,0])
@@ -245,7 +256,7 @@ def alphains_binding_alphact(frame, alphact_stage_two_sliced):
     insulin_alpha = INSULIN_RECEPTOR.divide(ATOM_POS["N"], "insulin_alpha")
     frame_start = 330
 
-    insulin_offset = (60 - ( frame - frame_start + 1)) / 2
+    insulin_offset = (60 - ( frame - frame_start + 1)) / 2 #move the insulin towards the alpha peptide 
     insulin_alpha.move_offset([0,insulin_offset,0])
 
     return alphact_stage_two_sliced_mol, insulin_alpha
@@ -254,7 +265,8 @@ def alphains_binding_alphact(frame, alphact_stage_two_sliced):
 def alphains_bonded_to_alphact(frame, alphact_stage_two_sliced):
     INSULIN_RECEPTOR = pdb.PDBMolecule(PATH_PDB, center=False)
     INSULIN_RECEPTOR.move_to([0,0,0])
-    alphact_complex_insulinalpha_pos = alphact_stage_two_sliced + ATOM_POS["N"]
+    alphact_complex_insulinalpha_pos = alphact_stage_two_sliced + ATOM_POS["N"] #create a list of atom positions from insulin and the peptide
+    #create a molecule that is insulin in complex with the peptide
     alphact_complex_insulinalpha_mol = INSULIN_RECEPTOR.divide(alphact_complex_insulinalpha_pos, 'alphact_complex_insulinalpha')
 
     return alphact_complex_insulinalpha_mol
@@ -379,9 +391,6 @@ def frame(step):
         alphact_complex_insulinalpha_mol = alphains_bonded_to_alphact(step, alphact_stage_two_sliced)
         return Scene(camera,
                  objects=[light] + alphact_complex_insulinalpha_mol.povray_molecule )
-
-
-    #debugging
 
     elif seconds < 16: #Frame 420 -> 480
         if seconds < 14.7: #Frame 420 -> 441
